@@ -52,4 +52,4 @@ def rightsmallerthan(array):
 
 if __name__=="__main__":
     array=[8,5,11,-1,3,4,2]
-    print(rightsmallerthan(array))
+    rightsmallerthan(array)
