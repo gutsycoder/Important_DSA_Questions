@@ -68,21 +68,6 @@ class MinHeap:
         heap[i],heap[j]=heap[j],heap[i]
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 if __name__=="__main__":
     array = [48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41]
     heap_obj=MinHeap(array)
