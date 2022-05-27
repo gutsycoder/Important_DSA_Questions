@@ -21,3 +21,4 @@
 # [0, 3, 4],
 # Sample Output
 # true
+#It can be solved using an Algorithm similar to Tarjan's Algorithm 
