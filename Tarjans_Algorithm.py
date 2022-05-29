@@ -15,7 +15,7 @@ def dfs(graph,node,disc,low,inStack,nodeStack,ans):
             dfs(graph,v,disc,low,inStack,nodeStack,ans)
             low[node]=min(low[node],low[v])
         elif inStack[v]:
-            low[node]=min(low[node],low[v]) #Here we could also use low[node]=min(low[node],discoveryTime[v])
+            low[node]=min(low[node],low[v]) #Here we could also use low[node]=min(low[node],dis[v])
     if low[node]==disc[node]:
         component=[]
         #u is the topmost element in the stack
