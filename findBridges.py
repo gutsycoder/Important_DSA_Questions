@@ -34,14 +34,11 @@ def dfs(graph, allBridges, visited, ins, low, parent, currentVertex):
 
             if low[child] > ins[currentVertex]:
                 # Add an edge(currentVertex-child) to answer.
-                edge = [0] * 2
-                edge[0] = currentVertex
-                edge[1] = child
-                allBridges.append(edge)
+                allBridges.append([currentVertex,child])
 
         elif child != parent:
             # If adjacent vertex is alreedy visited before, then update the low of currentVertex.
-            low[currentVertex] = min(low[currentVertex], ins[child])
+            low[currentVertex] = min(low[currentVertex], ins[child]) #can also write min(low[currentVertex],low[child])
 
 
 # Function to add edge to graph.
@@ -85,3 +82,8 @@ def findBridges(edges, v, e):
             dfs(graph, allBridges, visited, ins, low, -1, i)
 
     return allBridges
+if __name__=="__main__":
+    edges=[[0,1],[3,1],[1,2],[3,4]]
+    vertex=5
+    edge=4
+    print(findBridges(edges,vertex,edge))
