@@ -28,3 +28,137 @@
 # startingAirport = "LGA"
 #Sample Output
 # 3 // ["LGA", "TLV"], ["LGA", "SFO"], and ["LGA", "EWR"]
+
+
+class AirportNode:
+    def __init__(self,airport):
+        self.airport=airport
+        self.isReachable=True
+        self.connections=[]
+        self.unreachableConnections=[]
+
+def airportConnections(airports,routes,startingAirport):
+    airportGraph=createAirportGraph(airports,routes)
+
+    unreachableAirportNodes=getUnreachableAirportNodes(airportGraph,airports,startingAirport)
+
+    markUnreachableConnections(airportGraph,unreachableAirportNodes)
+
+    return getMinNumberOfNewConnections(airportGraph,unreachableAirportNodes)
+
+def getMinNumberOfNewConnections(airportGraph,unreachableAirportNodes):
+    numberOfConnections=0
+    unreachableAirportNodes.sort(key=lambda airport: len(airport.unreachableConnections),reverse=True)
+    for airport in unreachableAirportNodes:
+        if airport.isReachable:
+            continue
+        numberOfConnections+=1
+        for connection in airport.unreachableConnections:
+            airportGraph[connection].isReachable=True
+    return numberOfConnections
+
+
+
+def markUnreachableConnections(airportGraph,unreachableAirportNodes):
+    for airportNode in unreachableAirportNodes:
+        airport=airportNode.airport
+        unreachableConnections=[]
+        dfsAddUnreachableConnections(airportGraph,airport,unreachableConnections,{})
+        airportNode.unreachableConnections=unreachableConnections
+
+
+def dfsAddUnreachableConnections(airportGraph,airport,unreachableConnections,visitedAirports):
+    if airport in visitedAirports or airportGraph[airport].isReachable:
+        return
+    visitedAirports[airport]=True
+    unreachableConnections.append(airport)
+    connections=airportGraph[airport].connections
+    for connection in connections:
+        dfsAddUnreachableConnections(airportGraph,connection,unreachableConnections,visitedAirports)
+
+
+
+
+
+
+
+def getUnreachableAirportNodes(airportGraph,airports,startingAirport):
+    visitedAirports={}
+    dfsAirports(airportGraph,startingAirport,visitedAirports)
+    unreachableAirportNodes=[]
+    for airport in airports:
+        if airport not in visitedAirports:
+            unreachableAirportNodes.append(airportGraph[airport])
+            airportGraph[airport].isReachable=False
+    return unreachableAirportNodes
+
+def dfsAirports(airportGraph,airport,visitedAirports):
+    if airport in visitedAirports:
+        return
+    visitedAirports[airport]=True
+    connections=airportGraph[airport].connections
+    for connection in connections:
+        dfsAirport(airportGraph,connection,visitedAirports)
+
+
+
+
+
+
+
+
+def createAirportGraph(airports,routes):
+    airportGraph={}
+    for airport in airports:
+        airportGraph[airport]=AirportNode(airport)
+    for u,v in routes:
+        airportGraph[u].connections.append(v)
+    return airportGraph
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if __name__=="__main__":
+
+    airports = [ "BGI", "CDG", "DEL", "DOH", "DSM", "EWR", "EYW", "HND", "ICN", "JFK", "LGA", "LHR", "ORD", "SAN", "SFO",
+    "SIN", "TLV", "BUD"]
+    routes  =[
+    ["DSM", "ORD"],
+    ["ORD", "BGI"],
+    ["BGI", "LGA"],
+    ["SIN", "CDG"], ["CDG", "SIN"],
+    ["CDG", "BUD"],
+    ["DEL", "DOH"],
+    ["DEL", "CDG"],
+    ["TLV", "DEL"],
+    ["EWR", "HND"],
+    ["HND", "ICN"],
+    ["HND", "JFK"], ["ICN", "JFK"],
+    ["JFK", "LGA"],
+    ["EYW", "LHR"],
+    ["LHR", "SFO"],
+    ["SFO", "SAN"],
+    ["SFO", "DSM"],
+    ["SAN", "EYW"]]
+    startingAirport = "LGA"
+
+    print(airportConnections(airports,routes,startingAirport))
