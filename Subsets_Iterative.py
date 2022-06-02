@@ -5,3 +5,19 @@
 # array = [1, 2, 3]
 # Sample Output
 # [[], [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]]
+
+def powerset(arr):
+    subsets=[[]]
+    for ele in arr:
+        for i in range(len(subsets)):
+            currentSubset=subsets[i]
+            subsets.append(currentSubset+[ele])
+    return subsets
+
+
+
+
+if __name__=="__main__":
+
+    arr=[1,2,3]
+    print(powerset(arr))
