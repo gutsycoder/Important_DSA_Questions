@@ -23,7 +23,7 @@ def getNumberOfNonAttackingQueenPlacements(row,columnPlacements,boardSize):
             validPlacements+=getNumberOfNonAttackingQueenPlacements(row+1,columnPlacements,boardSize)
 
     return validPlacements
-
+#as Row tends to n , this becomes a O(n) Algorithm
 def isNonAttackingPlacement(row,col,columnPlacements):
     for previousRow in range(row):
         columnToCheck=columnPlacements[previousRow]
